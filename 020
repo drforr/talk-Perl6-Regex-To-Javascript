@@ -1,0 +1,24 @@
+
+
+
+
+                                 Checkpointing
+
+
+     1) Regular expressions attempt to match text.
+
+     2) Use ~~ to try to match against your expression
+
+     3) Capture your matching text with ( ... )
+
+     4) Name what you capture with $<name> = ( ... )
+
+     5) Refactor with 'my regex { ... }'
+
+     6) Break up words with 'my token { ... }'
+
+
+
+
+
+

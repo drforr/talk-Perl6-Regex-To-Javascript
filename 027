@@ -1,0 +1,24 @@
+
+
+                                 Packing It Up
+
+
+     grammar JS {
+       token String { \" ( <-[ " ]>+ ) \" }
+       token Int { \d+ }
+       rule TOP { 'console.log(' <String> \+ <Int> ')' }
+     }
+
+     JS.new.parse(
+       'console.log( "Sum is " + 32 )'
+     );
+
+     say $/<String>[0] ~ $/<Int>;
+
+
+       Sum is 32
+
+
+
+
+

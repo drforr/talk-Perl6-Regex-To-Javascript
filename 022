@@ -1,0 +1,24 @@
+
+
+
+
+
+                              Stringing You Along
+
+
+     my token String { \" .*? \" }
+     my token JS     { 'console.log(' <String> '+ 32 )' };
+
+     say 'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+
+       ｢console.log( "Sum is " + 32 )｣
+        JS => ｢console.log( "Sum is " + 32 )｣
+         String => ｢"Sum is "｣
+
+
+
+
+
+
+

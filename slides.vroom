@@ -1,0 +1,447 @@
+# This is a sample Vroom input file. It should help you get started.
+#
+# Edit this file with your content. Then run `vroom vroom` to start
+# the show!
+#
+# See `perldoc Vroom` for complete details.
+#
+---- config
+# Basic config options.
+title: Vroom!
+indent: 5
+auto_size: 1
+# height: 18
+# width: 69
+vim_opts: '-u NONE'
+skip: 0
+
+# The following options are for Gvim usage.
+# vim: gvim
+# gvimrc: |
+#   set fuopt=maxhorz,maxvert
+#   set guioptions=egmLtT
+#   set guifont=Bitstream_Vera_Sans_Mono:h18
+#   set guicursor=a:blinkon0-ver25-Cursor
+#   colorscheme default
+
+----- center
+
+
+
+
+
+
+== From Regular Expressions to JavaScript
+    
+== Grammars in Perl 6
+
+
+
+
+
+
+Jeffrey Goff, Evozon Systems LLC
+https://github.com/drforr
+http://theperlfisher.blogspot.ro/
+----- center
+== Getting a Date
+     
+
+     
+say '2016-01-29T13:25+01:00';
+----- center
+== Getting a Date
+     
+
+
+say '2016-01-29T13:25+01:00' ~~
+
+/2016-01-29T13:25+01:00/;
+----- center
+== Getting a Date
+     
+
+     
+say '2016-01-29T13:25+01:00' ~~
+
+/2016-01-29T13:25+01:00/;
+
+
+----- indent 0
+== Woops, I did it again
+
+ $ perl6 slide03.pl6 
+ ===SORRY!===
+ Unrecognized regex metacharacter - (must be quoted to
+                                     match literally)
+ at /home/jgoff/Talks/Javascript/slide03.pl6:12
+ ------>                       /2016⏏-01-29T13:25+01:00/;
+ Unable to parse regex; couldn't find final '/'
+ at /home/jgoff/Talks/Javascript/slide03.pl6:12
+ ------>                       /2016-⏏01-29T13:25+01:00/;
+-----
+== Getting a Date
+
+      
+      
+say '2016-01-29T13:25+01:00' ~~
+
+/2016\-01\-29T13\:25\+01\:00/;
+
+
+
+｢2016-01-29T13:25+01:00｣
+-----
+== Breaking Up
+         
+
+         
+say '2016-01-29T13:25+01:00' ~~
+
+/2016\-01\-29
+ T13\:25
+ \+01\:00/;
+
+
+
+｢2016-01-29T13:25+01:00｣
+----- center
+== Comments
+             
+
+             
+say '2016-01-29T13:25+01:00' ~~
+
+/2016\-01\-29 # Date
+ T13\:25      # Time
+ \+01\:00     # Timezone
+/;
+
+
+｢2016-01-29T13:25+01:00｣
+----- center
+== Setting Yourself Apart
+
+
+say '2016-01-29T13:25+01:00' ~~
+
+/ ( 2016\-01\-29 )
+  ( T13\:25 )
+  ( \+01\:00 ) /;
+
+
+｢2016-01-29T13:25+01:00｣
+
+  0 => ｢2016-01-29｣
+  1 => ｢T13:25｣
+  2 => ｢+01:00｣
+----- center
+== Peeking In
+             
+             
+'2016-01-29T13:25+01:00' ~~
+
+/ ( 2016\-01\-29 )
+  ( T13\:25 )
+  ( \+01\:00 ) /;
+
+
+say $0;
+
+
+｢2016-01-29｣
+----- center
+== Standing Out
+           
+
+say '2016-01-29T13:25+01:00' ~~
+
+/ $<Date>     = ( 2016\-01\-29 )
+  $<Time>     = ( T13\:25 )
+  $<Timezone> = ( \+01\:00 ) /;
+
+
+
+  Date     => ｢2016-01-29｣
+  Time     => ｢T13:25｣
+  Timezone => ｢+01:00｣
+----- center
+== Stepping Out
+           
+
+say '2016-01-29T13:25+01:00' ~~
+
+/   $<Date>     = ( 2016\-01\-29 )
+  T $<Time>     = ( 13\:25 )
+    $<Timezone> = ( \+01\:00 ) /;
+
+
+
+  Date     => ｢2016-01-29｣
+  Time     => ｢13:25｣
+  Timezone => ｢+01:00｣
+----- center
+== Getting a Date
+
+my regex Date     { 2016\-01\-29 };
+my regex Time     { 13\:25 };
+my regex Timezone { \+01\:00 };
+
+say '2016-01-29T13:25+01:00' ~~
+
+/   <Date>     # ( 2016\-01\-29 )
+  T <Time>     # ( 13\:25 )
+    <Timezone> # ( \+01\:00 )
+/;
+
+  Date     => ｢2016-01-29｣
+  Time     => ｢T13:25｣
+  Timezone => ｢+01:00｣
+----- center
+== Clearing Matters Up
+          
+
+my regex Date     { 2016 \- 01 \- 29 };
+my regex Time     { 13 \: 25 };
+my regex Timezone { \+ 01 \: 00 };
+
+say '2016-01-29T13:25+01:00' ~~
+
+/ <Date> T <Time> <Timezone> /;
+
+  Date     => ｢2016-01-29｣
+  Time     => ｢13:25｣
+  Timezone => ｢+01:00｣
+----- center
+== Making Generalizations
+
+
+my regex Date     {    \d+ \- \d+ \- \d+ };
+my regex Time     {    \d+ \: \d+        };
+my regex Timezone { \+ \d+ \: \d+        };
+
+say '2016-01-29T13:25+01:00' ~~
+
+/ <Date> T <Time> <Timezone> /;
+
+
+  Date     => ｢2016-01-29｣
+  Time     => ｢13:25｣
+  Timezone => ｢+01:00｣
+----- center
+== More Space to Work With
+
+
+my regex Date     {    \d+ \- \d+ \- \d+ };
+my regex Time     {    \d+ \: \d+        };
+my regex Timezone { \+ \d+ \: \d+
+                  | Z };
+
+say '2016-01-29T13:25Z' ~~
+
+/ <Date> T <Time> <Timezone> /;
+
+
+  Date     => ｢2016-01-29｣
+  Time     => ｢13:25｣
+  Timezone => ｢Z｣
+----- center
+== Breaking In
+
+
+my regex Date     {    \d+ \- \d+ \- \d+ };
+my regex Time     {    \d+ \: \d+        };
+my regex Timezone { \+ \d+ \: \d+
+                  | Z };
+
+'2016-01-29T13:25Z' ~~ / <Date> T <Time> <Timezone> /;
+
+
+say $/<Date>;
+
+
+  ｢2016-01-29｣
+----- center
+== Nesting
+
+my regex Date     {    \d+ \- \d+ \- \d+ };
+my regex Time     {    \d+ \: \d+        };
+my regex Timezone { \+ \d+ \: \d+
+                  | Z };
+my regex ISO8601  { <Date> T <Time> <Timezone> };
+
+'2016-01-29T13:25Z' ~~ / <ISO8601> /;
+
+say $/;
+
+  ｢2016-01-29T13:25Z｣
+   ISO8601 => ｢2016-01-29T13:25Z｣
+    Date => ｢2016-01-29｣
+    Time => ｢13:25｣
+    Timezone => ｢Z｣
+----- center
+== Tokenizing
+
+my rule Date     {    \d+ \- \d+ \- \d+ };
+my rule Time     {    \d+ \: \d+        };
+my rule Timezone { \+ \d+ \: \d+
+                 | Z };
+my rule ISO8601  { <Date> T <Time> <Timezone> };
+
+'2016-01-29T13:25Z' ~~ / <ISO8601> /;
+
+say $/;
+
+  ｢2016-01-29T13:25Z｣
+
+   ISO8601 => ｢2016-01-29T13:25Z｣
+    Date => ｢2016-01-29｣
+    Time => ｢13:25｣
+    Timezone => ｢Z｣
+----- center
+== Checkpointing
+
+                     
+1) Regular expressions attempt to match text.
+
+2) Use ~~ to try to match against your expression
+
+3) Capture your matching text with ( ... )
+
+4) Name what you capture with $<name> = ( ... )
+
+5) Refactor with 'my regex { ... }'
+
+6) Break up words with 'my token { ... }'
+----- center
+== To Sum It Up
+
+
+my token JS { 'console.log( "Sum is " + 32 )' };
+
+say 'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+
+  ｢console.log( "Sum is " + 32 )｣
+   JS => ｢console.log( "Sum is " + 32 )｣
+----- center
+== Stringing You Along
+
+
+my token String { \" .*? \" }
+my token JS     { 'console.log(' <String> '+ 32 )' };
+
+say 'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+
+  ｢console.log( "Sum is " + 32 )｣
+   JS => ｢console.log( "Sum is " + 32 )｣
+    String => ｢"Sum is "｣
+----- center
+== Slowly I Turn, Int by Int
+
+
+my token Int    { \d+ }
+my token String { \" .*? \" }
+my token JS     { 'console.log(' <String> \+ <Int> ')' };
+
+say 'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+
+  ｢console.log( "Sum is " + 32 )｣
+   JS => ｢console.log( "Sum is " + 32 )｣
+    String => ｢"Sum is "｣
+    Int => ｢32｣
+----- center
+== Just In Time
+
+
+my token String { \" .*? \" }
+my token Int { \d+ }
+my rule JS { 'console.log(' <String> \+ <Int> ')' };
+
+'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+say $/<JS><String> ~ $/<JS><Int>;
+
+
+  "Sum is "32
+----- center
+== Just In Time
+
+
+my token String { \" ( .*? ) \" }
+my token Int { \d+ }
+my rule JS { 'console.log(' <String> \+ <Int> ')' };
+
+'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+say $/<JS><String>[0] ~ $/<JS><Int>;
+
+
+  Sum is 32
+----- center
+== Just In Time
+
+
+my token String { \" ( <-[ " ]>+ ) \" }
+my token Int { \d+ }
+my rule JS { 'console.log(' <String> \+ <Int> ')' };
+
+'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+say $/<JS><String>[0] ~ $/<JS><Int>;
+
+
+  Sum is 32
+----- center
+== Packing It Up
+
+
+grammar JS {
+  token String { \" ( <-[ " ]>+ ) \" }
+  token Int { \d+ }
+  rule TOP { 'console.log(' <String> \+ <Int> ')' }
+}
+
+JS.new.parse(
+  'console.log( "Sum is " + 32 )'
+);
+
+say $/<String>[0] ~ $/<Int>;
+
+
+  Sum is 32
+----- center
+== Taking Action
+
+grammar JS {
+  token String { \" ( <-[ " ]>+ ) \" }
+  token Int { \d+ }
+  rule TOP { 'console.log(' <String> \+ <Int> ')' }
+}
+class JS::Actions {
+  method TOP($/) { say $/<String>[0] ~ $/<Int>; }
+}
+
+JS.new.parse(
+  'console.log( "Sum is " + 32 )',
+  :actions(JS::Actions.new)
+);
+
+  Sum is 32
+----- center
+=== Conclusions
+
+1) Perl 6 Regular Expressions are powerful.
+
+2) Perl 6 can parse Perl 6
+
+3) Perl 6 can parse JavaScript
+
+4) Perl 6 can compile JavaScript
+
+
+
+https://github.com/drforr/perl6-ANTLR4
+https://github.com/drforr/perl6-PHP

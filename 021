@@ -1,0 +1,24 @@
+
+
+
+
+
+
+                                  To Sum It Up
+
+
+     my token JS { 'console.log( "Sum is " + 32 )' };
+
+     say 'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+
+       ｢console.log( "Sum is " + 32 )｣
+        JS => ｢console.log( "Sum is " + 32 )｣
+
+
+
+
+
+
+
+

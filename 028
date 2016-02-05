@@ -1,0 +1,24 @@
+
+
+                                 Taking Action
+
+     grammar JS {
+       token String { \" ( <-[ " ]>+ ) \" }
+       token Int { \d+ }
+       rule TOP { 'console.log(' <String> \+ <Int> ')' }
+     }
+     class JS::Actions {
+       method TOP($/) { say $/<String>[0] ~ $/<Int>; }
+     }
+
+     JS.new.parse(
+       'console.log( "Sum is " + 32 )',
+       :actions(JS::Actions.new)
+     );
+
+       Sum is 32
+
+
+
+
+

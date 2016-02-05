@@ -1,0 +1,24 @@
+
+
+
+
+                           Slowly I Turn, Int by Int
+
+
+     my token Int    { \d+ }
+     my token String { \" .*? \" }
+     my token JS     { 'console.log(' <String> \+ <Int> ')' };
+
+     say 'console.log( "Sum is " + 32 )' ~~ /<JS>/;
+
+
+       ｢console.log( "Sum is " + 32 )｣
+        JS => ｢console.log( "Sum is " + 32 )｣
+         String => ｢"Sum is "｣
+         Int => ｢32｣
+
+
+
+
+
+
